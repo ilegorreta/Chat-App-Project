@@ -55,3 +55,7 @@ function renderMessage(message) {
     html += '</li>';
     board.append(html);
 }
+
+module.exports = {
+    renderMessage
+}
