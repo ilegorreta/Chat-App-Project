@@ -10,6 +10,7 @@ socket.on('connect', function() {
 
 socket.on('message', function(data) {
     console.log(data);
+    renderMessage(data);
 })
 
 socket.on('disconnect', function() {
@@ -50,6 +51,11 @@ $(function() {
 function renderMessage(message) {
     var html = '';
     html += '<li>';
-    html += '<h5>' + message.message + '</h5>';
+    html += '<h5>' + message.name + ': ' + message.message + '</h5>';
     html += '</li>';
+<<<<<<< HEAD
 }
+=======
+    board.append(html);
+}
+>>>>>>> aee1b61e15260d8a032f812ecbbe3b4f34e34196
