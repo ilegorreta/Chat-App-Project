@@ -9,7 +9,6 @@ socket.on('connect', function() {
 });
 
 socket.on('message', function(data) {
-    console.log(data);
     renderMessage(data);
 })
 
@@ -32,14 +31,17 @@ $(function() {
         // This is the text message from the form submission
         let message = $('#inputField').val()
 
-        console.log(message);
-
         // Naive implementation
         socket.emit('login', {
             id: id,
             name: params.get('name'),
             room: params.get('room'),
-            message: message
+            message: message,
+        });
+
+        renderMessage({
+            name: params.get('name'),
+            message: message,
         });
 
         // Clear the text field with an empty string
