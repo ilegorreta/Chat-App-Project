@@ -53,9 +53,4 @@ function renderMessage(message) {
     html += '<li>';
     html += '<h5>' + message.name + ': ' + message.message + '</h5>';
     html += '</li>';
-<<<<<<< HEAD
 }
-=======
-    board.append(html);
-}
->>>>>>> aee1b61e15260d8a032f812ecbbe3b4f34e34196
