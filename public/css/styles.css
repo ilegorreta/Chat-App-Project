@@ -1,0 +1,9 @@
+.messagesMe {
+    background-color: #f5f589;
+    overflow-wrap: break-word;
+}
+
+.messagesOthers {
+    background-color: rgb(231, 130, 206);
+    overflow-wrap: break-word;
+}

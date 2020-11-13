@@ -1,15 +1,19 @@
 var socket = io();
 var params = new URLSearchParams(window.location.search);
 var board = $('#Board');
+var roomTitle = $('h2');
 
 //On is to listen events
 socket.on('connect', function() {
-
     console.log('Connected to the server (:');
+    socket.emit('login', {
+        name: params.get('name'),
+        room: params.get('room')
+    })
 });
 
 socket.on('message', function(data) {
-    renderMessage(data);
+    renderMessage(data, false);
 })
 
 socket.on('disconnect', function() {
@@ -24,6 +28,9 @@ if (!localStorage.id) {
 let id = localStorage.id
 
 $(function() {
+
+    roomTitle.html(`Room: ${params.get('room')}`)
+
     $('#messageForm').submit(function(e) {
 
         e.preventDefault()
@@ -31,18 +38,17 @@ $(function() {
         // This is the text message from the form submission
         let message = $('#inputField').val()
 
-        // Naive implementation
-        socket.emit('login', {
+        socket.emit('send', {
             id: id,
             name: params.get('name'),
             room: params.get('room'),
-            message: message,
+            message: message
         });
 
         renderMessage({
             name: params.get('name'),
             message: message,
-        });
+        }, true);
 
         // Clear the text field with an empty string
         $('#inputField').val('')
@@ -50,11 +56,12 @@ $(function() {
     })
 })
 
-function renderMessage(message) {
-    var html = '';
-    html += '<li>';
-    html += '<h5>' + message.name + ': ' + message.message + '</h5>';
-    html += '</li>';
+function renderMessage(message, me) {
+    if (me) {
+        var html = `<li class="messagesMe"><h5> ${message.name}: ${message.message}</h5></li>`;
+    } else {
+        var html = `<li class="messagesOthers"><h5> ${message.name}: ${message.message}</h5></li>`;
+    }
     board.append(html);
 }
 

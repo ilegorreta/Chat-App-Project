@@ -4,8 +4,11 @@ const { User } = require('../classes/user');
 io.on('connection', (client) => {
 
     client.on('login', (data) => {
-        console.log(data);
-        client.broadcast.emit('message', data);
+        client.join(data.room)
+    })
+
+    client.on('send', (data) => {
+        client.broadcast.to(data.room).emit('message', data);
     })
 
     client.on('disconnect', () => {
