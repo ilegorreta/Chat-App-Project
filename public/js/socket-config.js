@@ -1,5 +1,6 @@
 var socket = io();
 var params = new URLSearchParams(window.location.search);
+var board = $('#Board');
 
 //On is to listen events
 socket.on('connect', function() {
@@ -45,3 +46,10 @@ $(function() {
         return false
     })
 })
+
+function renderMessage(message) {
+    var html = '';
+    html += '<li>';
+    html += '<h5>' + message.message + '</h5>';
+    html += '</li>';
+}
