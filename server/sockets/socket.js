@@ -1,9 +1,11 @@
 const { io } = require('../server');
 const { User } = require('../classes/user');
+const users = new User();
 
 io.on('connection', (client) => {
 
     client.on('login', (data) => {
+        let user = users.addUser(client.id, data.name, data.room)
         client.join(data.room)
         client.broadcast.to(data.room).emit('message', {
             name: data.name,
@@ -22,5 +24,11 @@ io.on('connection', (client) => {
 
     client.on('disconnect', () => {
         console.log('User disconnected');
+        user = users.getUser(client.id);
+        client.broadcast.to(user.room).emit('message', {
+            name: user.name,
+            message: `${user.name} left the room`,
+            user: "admin"
+        });
     });
 });
