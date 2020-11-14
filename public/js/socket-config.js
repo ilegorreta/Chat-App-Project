@@ -20,7 +20,7 @@ var params = new URLSearchParams(window.location.search)
 let board
 
 //On is to listen events
-socket.on('connect', function() {
+socket.on('connect', () => {
     console.log('Connected to the server (:')
     socket.emit(EVENTS.LOGIN, {
         name: params.get('name'),
@@ -28,7 +28,7 @@ socket.on('connect', function() {
     })
 })
 
-socket.on(EVENTS.MESSAGE, function(data) {
+socket.on(EVENTS.MESSAGE, (data) => {
     renderMessage(data)
 })
 
@@ -36,7 +36,7 @@ socket.on(EVENTS.INTERCOM, (data) => {
     renderMessage(data)
 })
 
-socket.on('disconnect', function() {
+socket.on('disconnect', () => {
     console.log('Connection to the server is lost :(')
 })
 
@@ -47,7 +47,7 @@ if (!localStorage.id) {
 
 let id = localStorage.id
 
-$(function() {
+$(() => {
 
     // Not in use
     board = $('#Board')
@@ -55,7 +55,7 @@ $(function() {
     let roomTitle = $('h2')
     roomTitle.html(`Room: ${params.get('room')}`)
 
-    $('#messageForm').submit(function(e) {
+    $('#messageForm').submit((e) => {
 
         e.preventDefault()
 
@@ -89,20 +89,9 @@ function renderMessage(message) {
         html = `<li class="messagesAdmin"><h5>${message.name}: ${message.message}</h5></li>`
     } else if (message.user == AGENT.EXTERNAL) {
         html = `<li class="messagesOthers"><h5>${message.name}: ${message.message}</h5></li>`
-
     } else if (message.user == AGENT.PERSONAL) {
         html = `<li class="messagesMe"><h5>${message.name}: ${message.message}</h5></li>`
     }
 
     board.append(html)
 }
-
-    /*
-    if (message.user === "me") {
-        var html = `<li class="messagesMe"><h5> ${message.name}: ${message.message}</h5></li>`;
-    } else if (message.user === "admin") {
-        var html = `<li class="messagesAdmin"><h5> ${message.name}: ${message.message}</h5></li>`;
-    } else if (message.user === "other") {
-        var html = `<li class="messagesOthers"><h5> ${message.name}: ${message.message}</h5></li>`;
-    }
-    */
