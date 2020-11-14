@@ -1,14 +1,28 @@
+#messageForm {
+    position: fixed;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    background-color: red;
+}
+
+#conversation {
+    height: 200px;
+    overflow-y: scroll;
+}
+
 .messagesMe {
+    margin-left: 50%;
     background-color: #f5f589;
-    overflow-wrap: break-word;
+    width: 20%;
 }
 
 .messagesOthers {
     background-color: rgb(231, 130, 206);
-    overflow-wrap: break-word;
+    width: 20%;
 }
 
 .messagesAdmin {
     background-color: rgb(207, 207, 207);
-    overflow-wrap: break-word;
+    width: 20%;
 }
