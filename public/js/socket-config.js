@@ -13,7 +13,11 @@ socket.on('connect', function() {
 });
 
 socket.on('message', function(data) {
-    renderMessage(data, false);
+    renderMessage({
+        name: data.name,
+        message: data.message,
+        user: data.user
+    });
 })
 
 socket.on('disconnect', function() {
@@ -48,7 +52,8 @@ $(function() {
         renderMessage({
             name: params.get('name'),
             message: message,
-        }, true);
+            user: "me"
+        });
 
         // Clear the text field with an empty string
         $('#inputField').val('')
@@ -56,10 +61,12 @@ $(function() {
     })
 })
 
-function renderMessage(message, me) {
-    if (me) {
+function renderMessage(message) {
+    if (message.user === "me") {
         var html = `<li class="messagesMe"><h5> ${message.name}: ${message.message}</h5></li>`;
-    } else {
+    } else if (message.user === "admin") {
+        var html = `<li class="messagesAdmin"><h5> ${message.name}: ${message.message}</h5></li>`;
+    } else if (message.user === "other") {
         var html = `<li class="messagesOthers"><h5> ${message.name}: ${message.message}</h5></li>`;
     }
     board.append(html);
