@@ -1,3 +1,7 @@
+#Board {
+    overflow-y: scroll;
+}
+
 #messageForm {
     padding: 3px;
     position: fixed;
