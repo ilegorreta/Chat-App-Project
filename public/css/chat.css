@@ -1,0 +1,89 @@
+html {
+    background-color: rgb(150, 216, 147);
+    scroll-behavior: smooth;
+}
+
+h1 { font-size: 1rem }
+h2 { font-size: 0.7rem }
+
+
+body {
+    overflow: hidden;
+}
+
+.container {
+    margin: 0px;
+    padding: 0px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 70vh 1fr;
+    grid-template-areas: "h h h h h h"
+                         "c c c c c c"
+                         "f f f f f f";
+}
+
+.header {
+    grid-area: h;
+}
+
+.content {
+    /* The scroll-bar-less UI is due to this and the autoscrolling feauture. */
+    overflow-y: auto;
+    overflow-x: hidden;
+    grid-area: c;
+}
+
+.footer {
+    grid-area: f;
+    /* position: fixed;
+    bottom: 0;
+    width: 100%; */
+}
+
+.input-field {
+    border: 0;
+    width: 75%;
+    /*
+    height: auto;
+    margin-left: 0.5%;
+    */
+    font-size: 1.1em;
+}
+
+.board {
+    list-style-type: none;
+}
+
+form button {
+    width: 9%;
+    border: none;
+    padding: 10px;
+    font-size: 1.4em;
+    background-color: green;
+    color: antiquewhite;
+    border-radius: 20px;
+}
+
+.messages {
+    text-align: left;
+    min-width: 15%;
+    max-width: 30%;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.me {
+    margin-left: 85%;
+    background: radial-gradient( rgb(157, 101, 231), rgb(156, 93, 238) );
+}
+
+.others {
+    background: radial-gradient( rgb(182, 142, 235), rgb(157, 115, 209) );
+}
+
+.admin {
+    font-weight: bold;
+    background: radial-gradient(  rgb(64, 137, 185), rgb(45, 120, 155) );
+}

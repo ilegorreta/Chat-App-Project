@@ -5,24 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <style>
+        body {
+           background-color: rgb(150, 216, 147); 
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Chat App</h1>
-    <h2></h2>
+    <div class="container">
 
-    <ul id="Board"></ul>
+        <div class="header">
+            <h1>Chat App</h1>
+            <h2></h2>
+        </div>
+        <div class="content">
+            <ul class="board"></ul>
+        </div>
+        <div class="footer">
+            <form class="message-form">
+                <input type="text" autocomplete="off" class="input-field" autofocus />
+                <button type="submit">Send</button>
+            </form>
+        </div>
 
-    <form id="messageForm">
-        <input type="text" autocomplete="off" id="inputField" autofocus/>
-        <button type="submit">Send</button>
-    </form>
-
-    <script src="socket.io/socket.io.js"></script>
-    <script src="js/libs/jquery.min.js"></script>
-    <script src="js/socket-config.js"></script>
-
+    </div>
 </body>
+
+<script src="socket.io/socket.io.js"></script>
+<script src="js/libs/jquery.min.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/socket-config.js"></script>
 
 </html>

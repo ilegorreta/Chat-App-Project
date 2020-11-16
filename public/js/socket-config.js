@@ -1,6 +1,7 @@
 // Client-side logic for Chat Rooms
 
 // Agents enum
+/*
 const AGENT = {
     PERSONAL: 'personal',
     EXTERNAL: 'external',
@@ -14,6 +15,7 @@ const EVENTS = {
     MESSAGE: 'message',
     INTERCOM: 'internal (admin) communication',
 }
+*/
 
 var socket = io()
 var params = new URLSearchParams(window.location.search)
@@ -22,17 +24,17 @@ let board
 //On is to listen events
 socket.on('connect', () => {
     console.log('Connected to the server (:')
-    socket.emit(EVENTS.LOGIN, {
+    socket.emit(utils.EVENTS.LOGIN, {
         name: params.get('name'),
         room: params.get('room')
     })
 })
 
-socket.on(EVENTS.MESSAGE, (data) => {
+socket.on(utils.EVENTS.MESSAGE, (data) => {
     renderMessage(data)
 })
 
-socket.on(EVENTS.INTERCOM, (data) => {
+socket.on(utils.EVENTS.INTERCOM, (data) => {
     renderMessage(data)
 })
 
@@ -49,49 +51,63 @@ let id = localStorage.id
 
 $(() => {
 
-    // Not in use
-    board = $('#Board')
+    board = $('.board')
     
     let roomTitle = $('h2')
     roomTitle.html(`Room: ${params.get('room')}`)
 
-    $('#messageForm').submit((e) => {
+    $('.message-form').submit((e) => {
 
         e.preventDefault()
 
         // This is the text message from the form submission
-        let message = $('#inputField').val()
+        let message = $('.input-field').val()
+        if (message == '') {
+            return false
+        } else {
 
-        socket.emit(EVENTS.SEND, {
-            id: id,
-            name: params.get('name'),
-            room: params.get('room'),
-            message: message
-        })
-
-        renderMessage({
-            name: params.get('name'),
-            message: message,
-            user: AGENT.PERSONAL
-        })
-
-        // Clear the text field with an empty string
-        $('#inputField').val('')
-        return false
+            socket.emit(utils.EVENTS.SEND, {
+                id: id,
+                name: params.get('name'),
+                room: params.get('room'),
+                message: message
+            })
+    
+            renderMessage({
+                name: params.get('name'),
+                message: message,
+                user: utils.AGENT.PERSONAL
+            })
+    
+            // Clear the text field
+            $('.input-field').val('')
+            return false
+        }
     })
 })
 
 function renderMessage(message) {
     let html = ''
 
-    if (message.user == AGENT.ADMIN) {
-        console.log(AGENT.ADMIN)
-        html = `<li class="messagesAdmin"><h5>${message.name}: ${message.message}</h5></li>`
-    } else if (message.user == AGENT.EXTERNAL) {
-        html = `<li class="messagesOthers"><h5>${message.name}: ${message.message}</h5></li>`
-    } else if (message.user == AGENT.PERSONAL) {
-        html = `<li class="messagesMe"><h5>${message.name}: ${message.message}</h5></li>`
+    // TODO: Naive ID impl. because of possible duplicates in one chat session...
+    let id = Math.trunc(Math.random() * 1000)
+
+    if (message.user == utils.AGENT.ADMIN) {
+        html = `<li id="${id}" class="messages admin"><h5>${message.name}: ${message.message}</h5></li>`
+    } else if (message.user == utils.AGENT.EXTERNAL) {
+        html = `<li id="${id}" class="messages others"><h5>${message.name}: ${message.message}</h5></li>`
+    } else if (message.user == utils.AGENT.PERSONAL) {
+        html = `<li id="${id}" class="messages me"><h5>${message.name}: ${message.message}</h5></li>`
     }
 
     board.append(html)
+
+    // Not what we want. Buggy after tests (It adds dead space to the page).
+    let mess = document.getElementById(id)
+    function scrollToBottom(e) {
+        e.scrollTop = e.scrollHeight;
+    }
+
+    mess.scrollIntoView()
+
 }

@@ -1,19 +1,22 @@
-// Agents enum
-const AGENT = {
-    PERSONAL: 'personal',
-    EXTERNAL: 'external',
-    ADMIN: 'admin'
-}
+// Utilities module
+// Cross-end IIFE initialization
 
-// Events enum
-const EVENTS = {
-    LOGIN: 'login',
-    SEND: 'send',
-    MESSAGE: 'message',
-    INTERCOM: 'internal (admin) communication',
-}
+(function (exports) {
 
-module.exports = {
-    AGENT,
-    EVENTS
-}
+    // Agents enum
+    exports.AGENT = {
+        PERSONAL: 'personal',
+        EXTERNAL: 'external',
+        ADMIN: 'admin'
+    }
+
+    // Events enum
+    exports.EVENTS = {
+        LOGIN: 'login',
+        SEND: 'send',
+        MESSAGE: 'message',
+        INTERCOM: 'internal (admin) communication',
+    }
+
+
+})(typeof exports === 'undefined' ? this.utils = {} : exports)
