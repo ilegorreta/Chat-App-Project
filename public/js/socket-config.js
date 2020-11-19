@@ -86,28 +86,29 @@ $(() => {
     })
 })
 
-function renderMessage(message) {
+function renderMessage(data) {
     let html = ''
 
     // TODO: Naive ID impl. because of possible duplicates in one chat session...
     let id = Math.trunc(Math.random() * 1000)
 
-    if (message.user == utils.AGENT.ADMIN) {
-        html = `<li id="${id}" class="messages admin"><h5>${message.name}: ${message.message}</h5></li>`
-    } else if (message.user == utils.AGENT.EXTERNAL) {
-        html = `<li id="${id}" class="messages others"><h5>${message.name}: ${message.message}</h5></li>`
-    } else if (message.user == utils.AGENT.PERSONAL) {
-        html = `<li id="${id}" class="messages me"><h5>${message.name}: ${message.message}</h5></li>`
+    switch(data.user) {
+        case utils.AGENT.ADMIN:
+            html = `<li id="${id}" class="messages admin"><h5>${data.name}: ${data.message}</h5></li>`
+        case utils.AGENT.EXTERNAL:
+            html = `<li id="${id}" class="messages others"><h5>${data.name}: ${data.message}</h5></li>`
+        case utils.AGENT.PERSONAL:
+            html = `<li id="${id}" class="messages me"><h5>${data.name}: ${data.message}</h5></li>`
     }
-
     board.append(html)
 
-    // Not what we want. Buggy after tests (It adds dead space to the page).
-    let mess = document.getElementById(id)
-    function scrollToBottom(e) {
-        e.scrollTop = e.scrollHeight;
-    }
+    
+    let msg = document.getElementById(id)
+    msg.scrollIntoView()
+}
 
-    mess.scrollIntoView()
 
+// TODO: DEPRECATED. Buggy after tests (It adds dead space to the page).
+function scrollToBottom(e) {
+    e.scrollTop = e.scrollHeight;
 }

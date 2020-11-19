@@ -33,6 +33,19 @@ body {
     grid-area: c;
 }
 
+.content::-webkit-scrollbar {
+    width: 8px;     
+    height: 8px; 
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: rgb(218, 186, 48);
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+    background: rgb(231, 193, 24);
+}
+
 .footer {
     grid-area: f;
     /* position: fixed;
@@ -65,13 +78,14 @@ form button {
 }
 
 .messages {
+    font-size: 0.65em;
     text-align: left;
-    min-width: 15%;
-    max-width: 30%;
+    min-width: 30%;
+    max-width: 65%;
     width: fit-content;
     height: fit-content;
-    border-radius: 20px;
-    padding: 2px;
+    border-radius: 15px;
+    padding: 15px;
 }
 
 .me {
